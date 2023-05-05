@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateListByPropImmutable = exports.updateListByProp = exports.moveElement = void 0;
+exports.moveElementByPropertyImmutable = exports.moveElementByProperty = exports.moveElementImmutable = exports.moveElement = void 0;
 const lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
 /** Simple movement of an element within a list
  *
@@ -13,9 +13,31 @@ const lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
  *
  *  Example: elementMoved([A, B, C, D, E], 0, 3) => [B, C, D, A, E]
  *
- *  Does not mutate the original array
+ *  MUTATES the original array
  */
 const moveElement = (
+/** The list of elements holding the element to be moved */
+elemList, 
+/** The index of the element to be moved */
+originIndex, 
+/** The destination index of the element to be moved */
+destinationIndex) => {
+    const originalElement = elemList[originIndex];
+    elemList.splice(originIndex, 1);
+    elemList.splice(destinationIndex, 0, originalElement);
+};
+exports.moveElement = moveElement;
+/** Simple movement of an element within a list
+ *
+ *  The element at the original index is moved to the destination index
+ *
+ *  All other elements are adjusted, accordingly
+ *
+ *  Example: elementMoved([A, B, C, D, E], 0, 3) => [B, C, D, A, E]
+ *
+ *  DOES NOT MUTATE the original array
+ */
+const moveElementImmutable = (
 /** The list of elements holding the element to be moved */
 elemList, 
 /** The index of the element to be moved */
@@ -28,7 +50,7 @@ destinationIndex) => {
     clonedList.splice(destinationIndex, 0, originalElement);
     return clonedList;
 };
-exports.moveElement = moveElement;
+exports.moveElementImmutable = moveElementImmutable;
 /** Assumes primitive page numbers are stored in list[elem].indexKey[0].indexKey[1]... etc.
  *
  *  Assumes page numbers are 0-indexed unless optional flag is passed in
@@ -37,7 +59,7 @@ exports.moveElement = moveElement;
  *
  *  MUTATES the original array
  */
-const updateListByProp = (
+const moveElementByProperty = (
 /** The list of elements holding the element to be moved */
 elemList, 
 /** The index of the element to be moved */
@@ -48,9 +70,9 @@ destinationIndex,
 indexKey, 
 /** Optional, defaults to true. An indication as to whether the index is 0-indexed or 1-indexed */
 zeroIndexed = true) => {
-    moveElementByProp(elemList, originIndex, destinationIndex, indexKey, zeroIndexed);
+    adjustByProp(elemList, originIndex, destinationIndex, indexKey, zeroIndexed);
 };
-exports.updateListByProp = updateListByProp;
+exports.moveElementByProperty = moveElementByProperty;
 /** Assumes primitive page numbers are stored in list[elem].indexKey[0].indexKey[1]... etc.
  *
  *  Assumes page numbers are 0-indexed unless optional flag is passed in
@@ -59,7 +81,7 @@ exports.updateListByProp = updateListByProp;
  *
  *  DOES NOT MUTATE the original array
  */
-const updateListByPropImmutable = (
+const moveElementByPropertyImmutable = (
 /** The list of elements holding the element to be moved */
 elemList, 
 /** The index of the element to be moved */
@@ -73,17 +95,14 @@ zeroIndexed = true,
 /** Optional, defaults to false. A flag that will sort the results based on the ultimate position values */
 sort = false) => {
     const clonedList = (0, lodash_clonedeep_1.default)(elemList);
-    moveElementByProp(clonedList, originIndex, destinationIndex, indexKey, zeroIndexed, sort);
-    return clonedList;
+    return adjustByProp(clonedList, originIndex, destinationIndex, indexKey, zeroIndexed, sort);
 };
-exports.updateListByPropImmutable = updateListByPropImmutable;
+exports.moveElementByPropertyImmutable = moveElementByPropertyImmutable;
 /** Assumes primitive page numbers are stored in list[elem].indexKey[0].indexKey[1]... etc.
  *
  *  Assumes page numbers are 0-indexed unless optional flag is passed in
- *
- *  Does not mutate the original array
  */
-const moveElementByProp = (
+const adjustByProp = (
 /** The list of elements holding the element to be moved */
 elemList, 
 /** The index of the element to be moved */
