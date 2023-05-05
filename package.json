@@ -1,6 +1,6 @@
 {
   "name": "move-by-property",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple package (with minimal dependencies) for moving elements within an array",
   "keywords": ["array", "move", "element", "virtual", "splice", "pagination", "position", "mutable", "immutable"],
   "main": "index.js",

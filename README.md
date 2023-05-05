@@ -40,10 +40,10 @@ console.log(list); // ["A", "B", "C", "D"] <- stays the same
 console.log(newList); // ["B", "C", "A", "D"] <- "A" is moved to index 2
 ```
 
-Calling `moveElementVirtual()` allows you to adjust the elements based on a property (including nested properties). It assumes a 0-indexed values for the order numbers, but you can pass in an optional flag to use 1-indexed values. Mutates the original array and cannot be sorted (...just yet).
+Calling `moveElementByProperty()` allows you to adjust the elements based on a property (including nested properties). It assumes a 0-indexed values for the order numbers, but you can pass in an optional flag to use 1-indexed values. Mutates the original array and cannot be sorted (...just yet).
 
 ```javascript
-import { moveElementVirtual } from "move-by-property";
+import { moveElementByProperty } from "move-by-property";
 
 const list = [
   {
@@ -65,7 +65,7 @@ const list = [
 
 const nestedPropertyPath = ["data", "position"];
 const isZeroIndexed = true;
-moveElementVirtual(list, 0, 2, nestedPropertyPath, isZeroIndexed);
+moveElementByProperty(list, 0, 2, nestedPropertyPath, isZeroIndexed);
 console.log(list)
 /**
   {
@@ -86,10 +86,10 @@ console.log(list)
  * /
 ```
 
-Calling `moveElementVirtualImmutable()` is similar, but it does not mutate the data and immediately creates a deep copy (using \_.cloneDeep). You can optionally pass in a boolean flag to sort the array, if desired.
+Calling `moveElementByPropertyImmutable()` is similar, but it does not mutate the data and immediately creates a deep copy (using \_.cloneDeep). You can optionally pass in a boolean flag to sort the array, if desired.
 
 ```javascript
-import { moveElementVirtualImmutable } from "move-by-property";
+import { moveElementByPropertyImmutable } from "move-by-property";
 
 const list = [
   {
@@ -112,7 +112,7 @@ const list = [
 const nestedPropertyPath = ["data", "position"];
 const isZeroIndexed = true;
 const shouldSort = true;
-const result = moveElementVirtualImmutable(list, 0, 2, nestedPropertyPath, isZeroIndexed, shouldSort);
+const result = moveElementByPropertyImmutable(list, 0, 2, nestedPropertyPath, isZeroIndexed, shouldSort);
 /**
   {
     data: { position: 0 },
@@ -152,7 +152,7 @@ const result = moveElementVirtualImmutable(list, 0, 2, nestedPropertyPath, isZer
 - Inputs: Same as `moveElement()`
 - Output: It returns a modified deep clone of the original array and the original array remains intact.
 
-### Method: `moveElementVirtual()`
+### Method: `moveElementByProperty()`
 
 - Input:
   ```typescript
@@ -169,7 +169,7 @@ const result = moveElementVirtualImmutable(list, 0, 2, nestedPropertyPath, isZer
   ```
 - Output: N/A - It mutates the original array and nothing is returned.
 
-### Method: `moveElementVirtualImmutable()`
+### Method: `moveElementByPropertyImmutable()`
 
 - Inputs:
   ```typescript

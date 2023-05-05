@@ -2,8 +2,8 @@ import cloneDeep from "lodash.clonedeep";
 import {
   moveElement,
   moveElementImmutable,
-  moveElementVirtual,
-  moveElementVirtualImmutable,
+  moveElementByProperty,
+  moveElementByPropertyImmutable,
 } from "../src/index";
 
 interface TestObject {
@@ -93,11 +93,11 @@ describe("moveElementImmutable", () => {
     expect(result).toStrictEqual([tempItem2, tempItem1, tempItem3]);
   });
 });
-describe("moveElementVirtualImmutable", () => {
+describe("moveElementByPropertyImmutable", () => {
   test("expected list to not be mutated", () => {
     const list = [tempItem1, tempItem2];
     const copyBeforeChanging = cloneDeep(list);
-    const result = moveElementVirtualImmutable(list, 0, 1, ["data", "page"]);
+    const result = moveElementByPropertyImmutable(list, 0, 1, ["data", "page"]);
     expect(list).toStrictEqual(copyBeforeChanging);
     expect(list).not.toEqual(result);
   });
@@ -111,7 +111,7 @@ describe("moveElementVirtualImmutable", () => {
       { tempItem5, data: { page: 4 } },
       { tempItem1, data: { page: 5 } },
     ];
-    const result = moveElementVirtualImmutable(
+    const result = moveElementByPropertyImmutable(
       newList,
       0,
       4,
@@ -126,7 +126,7 @@ describe("moveElementVirtualImmutable", () => {
     const list = [tempItem4, tempItem2, tempItem1, tempItem3, tempItem5];
     const copyBeforeChanging = cloneDeep(list);
     const newList = [tempItem1, tempItem2, tempItem3, tempItem4, tempItem5];
-    const result = moveElementVirtualImmutable(
+    const result = moveElementByPropertyImmutable(
       newList,
       0,
       0,
@@ -141,7 +141,7 @@ describe("moveElementVirtualImmutable", () => {
     const list = [tempItem4, tempItem2, tempItem1, tempItem3, tempItem0];
     const copyBeforeChanging = cloneDeep(list);
     const newList = [tempItem0, tempItem1, tempItem2, tempItem3, tempItem4];
-    const result = moveElementVirtualImmutable(
+    const result = moveElementByPropertyImmutable(
       newList,
       0,
       0,
@@ -153,7 +153,7 @@ describe("moveElementVirtualImmutable", () => {
     expect(list).not.toStrictEqual(result);
   });
 });
-describe("moveElementVirtual", () => {
+describe("moveElementByProperty", () => {
   test("expected function to replace an element based on indexKey in a two-element list", () => {
     const list = [tempItem1, tempItem2];
     const copyBeforeChanging = cloneDeep(list);
@@ -161,7 +161,7 @@ describe("moveElementVirtual", () => {
       { ...cloneDeep(tempItem1), data: { page: 2 } },
       { ...cloneDeep(tempItem2), data: { page: 1 } },
     ];
-    moveElementVirtual(list, 0, 1, ["data", "page"], false);
+    moveElementByProperty(list, 0, 1, ["data", "page"], false);
     expect(list).toStrictEqual(strictEqualResult);
     expect(list).not.toStrictEqual(copyBeforeChanging);
   });
@@ -172,7 +172,7 @@ describe("moveElementVirtual", () => {
       { ...cloneDeep(tempItem0), data: { page: 1 } },
       { ...cloneDeep(tempItem1), data: { page: 0 } },
     ];
-    moveElementVirtual(list, 0, 1, ["data", "page"], true);
+    moveElementByProperty(list, 0, 1, ["data", "page"], true);
     expect(list).toStrictEqual(strictEqualResult);
     expect(list).not.toStrictEqual(copyBeforeChanging);
   });
@@ -186,7 +186,7 @@ describe("moveElementVirtual", () => {
       { ...cloneDeep(tempItem4), data: { page: 4 } },
       { ...cloneDeep(tempItem5), data: { page: 5 } },
     ];
-    moveElementVirtual(list, 0, 2, ["data", "page"], false);
+    moveElementByProperty(list, 0, 2, ["data", "page"], false);
     expect(list).toStrictEqual(strictEqualResult);
     expect(list).not.toStrictEqual(copyBeforeChanging);
   });
@@ -200,7 +200,7 @@ describe("moveElementVirtual", () => {
       { ...cloneDeep(tempItem3), data: { page: 2 } },
       { ...cloneDeep(tempItem5), data: { page: 4 } },
     ];
-    moveElementVirtual(list, 0, 4, ["data", "page"], false);
+    moveElementByProperty(list, 0, 4, ["data", "page"], false);
     expect(list).toStrictEqual(strictEqualResult);
     expect(list).not.toStrictEqual(copyBeforeChanging);
   });
@@ -223,7 +223,7 @@ describe("moveElementVirtual", () => {
             "Originally position 2, but will change the position property to 1 when position 0 changes the position property to 2",
         },
       ];
-      moveElementVirtual(list, 0, 2, ["data", "position"], true);
+      moveElementByProperty(list, 0, 2, ["data", "position"], true);
       expect(list).toStrictEqual([
         {
           data: { position: 2 },
@@ -260,7 +260,7 @@ describe("moveElementVirtual", () => {
             "Originally position 2, but will change the position property to 1 when position 0 changes the position property to 2",
         },
       ];
-      const result = moveElementVirtualImmutable(
+      const result = moveElementByPropertyImmutable(
         list,
         0,
         2,

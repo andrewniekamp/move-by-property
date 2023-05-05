@@ -55,7 +55,7 @@ export const moveElementImmutable = (
  *
  *  MUTATES the original array
  */
-export const moveElementVirtual = (
+export const moveElementByProperty = (
   /** The list of elements holding the element to be moved */
   elemList: any[],
   /** The index of the element to be moved */
@@ -78,7 +78,7 @@ export const moveElementVirtual = (
  *
  *  DOES NOT MUTATE the original array
  */
-export const moveElementVirtualImmutable = (
+export const moveElementByPropertyImmutable = (
   /** The list of elements holding the element to be moved */
   elemList: any[],
   /** The index of the element to be moved */
