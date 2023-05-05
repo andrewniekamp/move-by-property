@@ -1,0 +1,26 @@
+{
+  "name": "move-by-property",
+  "version": "1.0.0",
+  "description": "A simple package (with minimal dependencies) for moving elements within an array",
+  "keywords": ["array", "move", "element", "virtual", "splice", "pagination", "position", "mutable", "immutable"],
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig-build.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.5.0",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "jest": "^28.0.3",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^28.0.1",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0"
+  }
+}
